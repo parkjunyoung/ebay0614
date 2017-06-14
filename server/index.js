@@ -1,4 +1,5 @@
 import express from 'express';
+import path from 'path';
  
 const app = express();
  
@@ -31,11 +32,13 @@ sequelize
     console.error('Unable to connect to the database:', err);
 });
 
- 
-app.get('/', (req, res) => {
-    res.send('Es6 export Import');
+// SERVE STATIC FILES - REACT PROJECT
+app.use('/', express.static( path.join(__dirname, '../public') ));
+
+app.get('*', function(req,res){
+  res.sendFile(path.resolve(__dirname, '../public', 'index.html'));
 });
- 
+
 const server = app.listen(port, () => {
     console.log('Express listening on port', port);
 })
